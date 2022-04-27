@@ -16,8 +16,8 @@ defmodule SSHPot do
 
   def shell(_username, peer) do
     spawn(fn ->
-      Logger.info(IO.ANSI.green() <> "cracked!" <> IO.ANSI.reset())
-      Logger.info("ip: #{ip(peer)}, time: #{inspect(:erlang.time())}, user_input: #{inspect(IO.gets("root@rhel# "))}")
+      Logger.warning(IO.ANSI.green() <> "cracked!" <> IO.ANSI.reset())
+      Logger.warning("ip: #{ip(peer)}, time: #{inspect(:erlang.time())}, user_input: #{inspect(IO.gets("root@rhel# "))}")
       IO.puts(IO.ANSI.red() <> "Oh Shit! You Muffin Head!" <> IO.ANSI.reset()) end)
   end
 
@@ -27,7 +27,7 @@ defmodule SSHPot do
     if user == @username and passwd == @passwd do
       true
     else
-      Logger.info("#{ip(peer)} tried #{inspect(passwd)}")
+      Logger.warning("#{ip(peer)} tried #{inspect(passwd)}")
       false
     end
   end
