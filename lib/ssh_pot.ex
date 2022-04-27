@@ -8,7 +8,7 @@ defmodule SSHPot do
   def start_link do
     :ssh.daemon(@port, [
       system_dir: @sys_dir,
-      #user_passwords: [{@username, @passwd}],
+      id_string: 'OpenSSH 8.4 redhat',
       shell: &shell/2,
       pwdfun: &log_it/4
     ])
