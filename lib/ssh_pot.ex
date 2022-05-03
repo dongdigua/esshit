@@ -17,7 +17,7 @@ defmodule SSHPot do
   def shell(_username, peer) do
     spawn(fn ->
       Logger.warning(IO.ANSI.green() <> "cracked!" <> IO.ANSI.reset())
-      Logger.warning("ip: #{ip(peer)}, time: #{inspect(:erlang.time())}, user_input: #{inspect(IO.gets("root@rhel# "))}")
+      Logger.warning("ip: #{ip(peer)}, time: #{inspect(:erlang.time())}, user_input: #{inspect(SSHPot.FakeCli.cli(5, []))}")
       IO.puts(IO.ANSI.red() <> "Oh Shit! You Muffin Head!" <> IO.ANSI.reset()) end)
   end
 
