@@ -1,2 +1,2 @@
-- [ ] Use mnesia as data storage
+- [x] Use mnesia as data storage
 - [ ] write a tool to dump database to csv file
