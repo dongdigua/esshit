@@ -1,22 +1,29 @@
 defmodule SSHPot.FakeCli do
+  @command_io_map %{
+    "cat" => " /\\_/\\\n( o.o )\n > ^ <",
+    "whoami" => "root",
+    "pwd" => "/Never/Gonna/Give/You/Up"
+  }
+
   def cli(0, acc), do: acc
+
   def cli(count, acc) do
-    input_raw = IO.gets("[root@rhel]# ")
-    input = input_raw |> to_string() |> String.trim()
-    cond do
-      input =~ ~r/cat/ -> cat()
-      input =~ ~r/whoami/ -> IO.puts("root")
-      true -> IO.puts(IO.ANSI.red() <> "\u262d" <> IO.ANSI.reset())
+    case IO.gets("[root@rhel]# ") do
+      {:error, :interrupted} ->
+        IO.puts("^C")
+        cli(count - 1, acc)
+
+      input_raw ->
+        input = input_raw |> to_string() |> String.trim()
+        command = List.first(String.split(input))
+
+        case command do
+          "exit" -> acc
+          "quit" -> acc
+          _ ->
+            IO.puts(@command_io_map[command])
+            cli(count - 1, acc ++ [input])
+        end
     end
-    cli(count - 1, acc ++ [input_raw])
   end
-
-  def cat() do
-    IO.puts("""
-     /\\_/\\
-    ( o.o )
-     > ^ <
-    """)
-  end
-
 end
