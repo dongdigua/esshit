@@ -4,6 +4,7 @@ defmodule SSHPot do
   @port 2222
 
   def start_link do
+    Logger.info "Starting... timestamp: #{System.os_time}"
     :ssh.daemon(@port, [
       system_dir: @sys_dir,
       id_string: 'OpenSSH_9.0',
@@ -30,6 +31,11 @@ defmodule SSHPot do
     passwd = List.to_string(passwd)
     Logger.info("#{user},#{passwd}")
     Agent.update(__MODULE__, fn _ -> {user, passwd} end)
-    true
+    # login success randomly
+    if :rand.uniform(20) == 6 do
+      true
+    else
+      false
+    end
   end
 end
