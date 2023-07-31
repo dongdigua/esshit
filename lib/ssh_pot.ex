@@ -30,11 +30,13 @@ defmodule SSHPot do
     user = List.to_string(user)
     passwd = List.to_string(passwd)
     Logger.info("#{user},#{passwd}")
-    Agent.update(__MODULE__, fn _ -> {user, passwd} end)
     # login success randomly
     if :rand.uniform(20) == 6 do
+      Logger.warn "random success"
+      Agent.update(__MODULE__, fn _ -> {user, passwd} end)
       true
     else
+      SSHPot.Db.add(user, passwd, [])
       false
     end
   end
