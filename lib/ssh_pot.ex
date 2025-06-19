@@ -32,7 +32,7 @@ defmodule SSHPot do
     Logger.info("#{user},#{passwd}")
     # login success randomly
     if :rand.uniform(20) == 6 do
-      Logger.warn "random success"
+      Logger.warning "random success"
       Agent.update(__MODULE__, fn _ -> {user, passwd} end)
       true
     else
